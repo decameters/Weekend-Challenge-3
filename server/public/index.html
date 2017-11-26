@@ -14,7 +14,19 @@
     <input id="taskAddIn" placeholder="create a new task here!"><button id="addTaskButton">add your task :)</button>
     <div id="toDoDiv">
         <h2>tasks to complete</h2>
-        <ul id="viewTasks"></ul>
+        <table class="collegeRuled">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Task</th>
+                    <th id="complete">Completed?</th>
+                    <th id="delete">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="viewTasks">
+            </tbody>
+        </table>
+
     </div>
 </body>
 </html>
