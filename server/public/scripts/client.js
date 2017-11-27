@@ -40,7 +40,7 @@ function getAllTasks(){
                 var task = response[i];
                 var $newTask = $('<tr><td>' + task.task + '</td><td>' + task.completed + '</td></tr>');
                 
-                var $completeButton = $('<tr class="complete"><td><button class = "completeButton">Mark as Completed</button></td></tr>');
+                var $completeButton = $('<tr><td><button class = "completeButton">Mark as Completed</button></td></tr>');
                 $completeButton.data('id', task.id);
                 $newTask.prepend($completeButton);
 
@@ -50,10 +50,9 @@ function getAllTasks(){
                 $('#viewTasks').append($newTask);
 
                 if (task.completed == "Yes!"){
-                    $($completeButton).css('background-color', 'lightblue');
+                    $($completeButton).toggleClass('markComplete');
                 }
-                }
-            
+            }
         }
     })
 }
@@ -62,6 +61,7 @@ function getAllTasks(){
 function markTaskAsComplete(){
     var taskToComplete = $(this).parent().parent().data().id;
     var taskCompleted = 'Yes!';
+    var taskToMove = $(this).data().task;
 
     $.ajax({
         method: 'PUT',
@@ -70,21 +70,24 @@ function markTaskAsComplete(){
             completed: taskCompleted
         },
         success: function(response){
-            console.log('mark task as complete', response);            
+            console.log('mark task as complete', response); 
             getAllTasks();
         }
     })
-    
 }
 
 // removes tasks from DOM and database
+// confirms before deleting
 function deleteTask(){
     var taskToDelete = $(this).parent().parent().data().id;
-    $.ajax({
-        method: 'DELETE',
-        url: '/todo/' + taskToDelete,
-        success: function (response){
-            getAllTasks();
-        }
-    })
+    
+    if (confirm("Are you sure you want to delete this task?") == true) {
+        $.ajax({
+            method: 'DELETE',
+            url: '/todo/' + taskToDelete,
+            success: function (response){
+                getAllTasks();
+            }
+        })
+    }
 }
