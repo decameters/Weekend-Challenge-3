@@ -7,9 +7,11 @@ function onReady(){
     $('#addTaskButton').on('click', addTask);
     $('#viewTasks').on('click', '.deleteButton', deleteTask);
     $('#viewTasks').on('click', '.completeButton', markTaskAsComplete);
+    
     getAllTasks()
 }
 
+// adds task to database
 function addTask(){
     var addTaskIn = $('#taskAddIn').val();
     $.ajax({
@@ -26,6 +28,7 @@ function addTask(){
     })
 }
 
+// gets tasks from database
 function getAllTasks(){
     $.ajax({
         method: 'GET',
@@ -35,9 +38,9 @@ function getAllTasks(){
             $('#viewTasks').empty();
             for (var i = 0; i < response.length; i++) {
                 var task = response[i];
-                var $newTask = $('<tr><td>' + response[i].task + '</td><td>' + response[i].completed + '</td></tr>');
+                var $newTask = $('<tr><td>' + task.task + '</td><td>' + task.completed + '</td></tr>');
                 
-                var $completeButton = $('<tr><td><button class = "completeButton">Mark as Completed</button></td></tr>');
+                var $completeButton = $('<tr class="complete"><td><button class = "completeButton">Mark as Completed</button></td></tr>');
                 $completeButton.data('id', task.id);
                 $newTask.prepend($completeButton);
 
@@ -45,16 +48,20 @@ function getAllTasks(){
                 $deleteTaskButton.data('id', task.id);
                 $newTask.append($deleteTaskButton);
                 $('#viewTasks').append($newTask);
+
+                if (task.completed == "Yes!"){
+                    $($completeButton).css('background-color', 'lightblue');
+                }
                 }
             
         }
     })
 }
 
+// changes DOM and database to completed
 function markTaskAsComplete(){
     var taskToComplete = $(this).parent().parent().data().id;
-    console.log('task completed was clicked, task ID was', taskToComplete);
-    var taskCompleted = 'Yes.';
+    var taskCompleted = 'Yes!';
 
     $.ajax({
         method: 'PUT',
@@ -63,22 +70,16 @@ function markTaskAsComplete(){
             completed: taskCompleted
         },
         success: function(response){
-            console.log('mark task as complete', response);
-            
+            console.log('mark task as complete', response);            
             getAllTasks();
-
         }
     })
     
-    // var $taskCompleteButton = $('button class="completeButton">Mark As Complete</button>');
-    // $taskCompleteButton.data('id', task.id);
-    
-    
 }
 
+// removes tasks from DOM and database
 function deleteTask(){
     var taskToDelete = $(this).parent().parent().data().id;
-    // console.log('delete task was clicked, task ID was', taskToDelete);
     $.ajax({
         method: 'DELETE',
         url: '/todo/' + taskToDelete,
@@ -87,14 +88,3 @@ function deleteTask(){
         }
     })
 }
-
-/* this all needs to be a table... not sure about the taskAddInput
-since on this its already on the database... */
-
-// function appendTasksToDOM(task){
-    // var $newTaskListItem = $('<tr></tr>');
-
-    // var $taskAddInput = $('#taskAddIn').val();
-    // // $taskAddInput.val()
-    // $newTaskListItem.append($taskAddInput);
-// }

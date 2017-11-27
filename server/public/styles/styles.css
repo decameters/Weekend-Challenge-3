@@ -6,38 +6,48 @@ input {
     width: 200px;
 }
 
-/* table.collegeRuled {
+button {
     font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 2px solid #ADD8E6;
+}
+
+h1 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+h2 {
+    font-size: 16px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.markComplete {
+    background-color: lightblue;
+}
+
+table.collegeRuled {
+    font-family: "Comic Sans MS", cursive, sans-serif;
     background-color: #FFFFFF;
-    /* width: 350px; */
-    /* height: 200px; */
-    /* text-align: center; */
-    /* border-collapse: collapse;
+    text-align: center;
+    border-collapse: collapse;
   }
   table.collegeRuled td, table.collegeRuled th {
-    border: 2px solid #ADD8E6;
-    padding: 5px 10px;
+    padding: 5px 5px;
   }
   table.collegeRuled tbody td {
     font-size: 12px;
-    color: #000000;
   }
   table.collegeRuled tr:nth-child(even) {
     background: #FFFFE0;
   }
   table.collegeRuled thead {
     background: #FFFFE0;
-    border-bottom: 2px solid #ADD8E6;
   }
   table.collegeRuled thead th {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     color: #000000;
     text-align: center;
-    border-left: 2px solid #ADD8E6;
   }
-  table.collegeRuled thead th:first-child {
-    border-left: none;
-  } */
+  table.collegeRuled tfoot td {
+    font-size: 14px;
+  }
   
